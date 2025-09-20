@@ -63,7 +63,7 @@ $wgDBuser = getenv("MARIADB_USER");
 $wgDBpassword = getenv("MARIADB_PASSWORD");
 
 ## Database settings for gb_api_dump
-$wgExternalDataSources['gb_api_dump'] = [ 
+$wgExternalDataSources['gb_api_dump'] = [
     'server' => 'db',
     'type' => 'mysql',
     'name' => getenv("MARIADB_API_DUMP_DATABASE"),
@@ -142,7 +142,7 @@ $wgGroupPermissions["*"]["edit"] = false;
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, e.g. 'vector' or 'monobook':
-$wgDefaultSkin = "vector";
+$wgDefaultSkin = "giantbomb";
 
 # Enabled skins.
 # The following skins were automatically enabled:
