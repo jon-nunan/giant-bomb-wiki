@@ -2,6 +2,7 @@ FROM mediawiki:1.43.1
 
 ARG INSTALL_GCSFUSE="false"
 ARG INSTALL_API="false"
+ARG INSTALL_XDEBUG="false"
 
 WORKDIR /var/www/html
 USER root
@@ -11,6 +12,22 @@ RUN set -x; \
     apt-get update \
  && apt-get upgrade -y \
  && apt-get install gnupg lsb-release libzip-dev unzip wget -y
+
+# Install Xdebug if required
+RUN if [ "$INSTALL_XDEBUG" = "true" ]; then \
+    pecl install xdebug-3.4.5 \
+    && docker-php-ext-enable xdebug \
+    && { \
+        echo 'zend_extension=xdebug.so'; \
+        echo '[xdebug]'; \
+        echo 'xdebug.mode=debug'; \
+        echo 'xdebug.client_host=host.docker.internal'; \
+        echo 'xdebug.client_port=9003'; \
+        echo 'xdebug.start_with_request=trigger'; \
+        echo 'xdebug.log=/var/log/xdebug.log'; \
+        echo 'xdebug.idekey=PHPSTORM'; \
+    } > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+fi
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 

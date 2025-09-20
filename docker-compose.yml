@@ -17,6 +17,7 @@ services:
       args:
         INSTALL_API: "false"
         INSTALL_GCSFUSE: "false"
+        INSTALL_XDEBUG: "${INSTALL_XDEBUG:-false}"
     env_file:
       - .env
     depends_on:
@@ -26,14 +27,14 @@ services:
       - "8080:80"
     volumes:
       #Skins
-      - ./skins:/var/www/html/skins:cached
-      #These lines cause these skins not to be mounted to volume
-      - /var/www/html/skins/Vector
+      - ./skins/GiantBomb:/var/www/html/skins/GiantBomb
+      - ./config/LocalSettings.php:/var/www/html/LocalSettings.php
       - ./config:/config
       - ./data:/data/
       - wiki-data:/var/www/html/images
     environment:
       - MV_ENV=dev
+      - PHP_IDE_CONFIG=serverName=mediawiki
     restart: unless-stopped
 
 volumes:

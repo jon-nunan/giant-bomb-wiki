@@ -11,7 +11,6 @@ $buttonsContent = file_get_contents($buttonsJson);
 // Decode JSON into PHP array
 $games = json_decode($gamesContent, true);
 $buttons = json_decode($buttonsContent, true);
-
 $hotGames = array_slice($games, 0, 3);
 $tigGames = array_slice($games, 0, 6);
 $randomGames = [...$games, ...$games];
